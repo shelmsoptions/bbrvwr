@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Book Reviews</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'book_reviews/css/styles.css' %}">
+    </head>
+    <body>
+        <h4>Hello {{ request.session.user.first_name }} {{ request.session.user.last_name }}</h4>
+        <h5><a href="/logout">Logout</a></h5>
+        <h1>Book Reviews index</h1>
+        <p><a href="{% url 'book:editor' %}">Add a Book and Review</a></p>
+        <div id="left-column">
+            <h2>Reviews</h2>
+            {% for review in recent_reviews %}
+            <div class="review-box">
+                <h3><a href="{% url 'book:show_book' review.review_book.id %}">{{ review.review_book.title }}</a></h3>
+                <h4>by {{ review.review_book.author.name }}</h4>
+                <h4> - A Review by: <a href="{% url 'book:show_user' review.review_creator.id %}">{{ review.review_creator.first_name }} {{ review.review_creator.last_name }}</a></h4>
+                <p> - {{ review.review_creator.first_name }}'s' Rating: {{ review.rating }}</p>
+                <p>{{ review.review_content }}</p>
+                <p><span class="info-font"></span>Review Date: {{ review.created_at }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="right-column">
+            <div class="book-box">
+                <h5>Reviewed books:</h5>
+                {% for book in all_books %}
+                <p><a href="#">{{ book.title }}</a></p>
+                {% endfor %}
+            </div>
+            <!-- Need to filter by unique book title - which means I need a <select> for existing books -->
+            <div class="book-box">
+                <h5>TEST Reviewed books:</h5>
+                {% for review in all_reviews %}
+                <p><a href="#">{{ review.review_book.title }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

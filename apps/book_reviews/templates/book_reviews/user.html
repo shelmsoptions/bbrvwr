@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>User Details</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'book_reviews/css/styles.css' %}">
+    </head>
+    <body>
+        <h4>Hello {{ request.session.user.first_name }} {{ request.session.user.last_name }}</h4>
+        <h5><a href="/logout">Logout</a></h5>
+        <h1>User Details</h1>
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <h3>Alias: </h3>
+        <h3>Email: </h3>
+        <h3>Total Reviews: </h3>
+        <h4>Book Reviews:</h4>
+        {% for review in books_reviewed %}
+            <p>{{ review.title }}</p>
+        {% endfor %}
+    </body>
+</html>
