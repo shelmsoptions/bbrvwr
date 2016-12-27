@@ -8,13 +8,14 @@
     </head>
     <body>
         <h4>Hello {{ request.session.user.first_name }} {{ request.session.user.last_name }}</h4>
+        <h5><a href="/book">Home</a></h5>
         <h5><a href="/logout">Logout</a></h5>
         <h1>User Details</h1>
         <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-        <h3>Alias: </h3>
-        <h3>Email: </h3>
-        <h3>Total Reviews: </h3>
-        <h4>Book Reviews:</h4>
+        <h3>Alias: not yet added to (User) model</h3>
+        <h3>Email: {{ user.email }}</h3>
+        <h3>Total # Reviews: {{ review_count }}</h3>
+        <h4>Book Reviews by {{ request.session.user.first_name }}:</h4>
         {% for review in books_reviewed %}
             <p>{{ review.title }}</p>
         {% endfor %}

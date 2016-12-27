@@ -8,6 +8,7 @@
     </head>
     <body>
         <h4>Hello {{ request.session.user.first_name }} {{ request.session.user.last_name }}</h4>
+        <h5><a href="/book">Home</a></h5>
         <h5><a href="/logout">Logout</a></h5>
         <h1>Book Reviews index</h1>
         <p><a href="{% url 'book:editor' %}">Add a Book and Review</a></p>
@@ -28,16 +29,16 @@
             <div class="book-box">
                 <h5>Reviewed books:</h5>
                 {% for book in all_books %}
-                <p><a href="#">{{ book.title }}</a></p>
+                <p><a href="{% url 'book:show_book' book.id %}">{{ book.title }}</a></p>
                 {% endfor %}
             </div>
-            <!-- Need to filter by unique book title - which means I need a <select> for existing books -->
-            <div class="book-box">
+            <!-- Need to filter by unique book title - which means I need a <select> for existing books ?? Not necessarily... keep-it-simple-->
+            <!-- <div class="book-box">
                 <h5>TEST Reviewed books:</h5>
                 {% for review in all_reviews %}
                 <p><a href="#">{{ review.review_book.title }}</a></p>
                 {% endfor %}
-            </div>
+            </div> -->
         </div>
     </body>
 </html>

@@ -41,6 +41,7 @@ class Book(models.Model):
 class Review(models.Model):
     review_content = models.CharField(max_length=500)
     review_creator = models.ForeignKey(User)
+    # related_name for filter
     review_book = models.ForeignKey(Book, related_name='review_book')
     # positive necessary??
     rating = models.PositiveIntegerField()

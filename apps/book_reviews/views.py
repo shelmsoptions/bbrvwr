@@ -14,10 +14,9 @@ def user_in_session(request):
 def index(request):
     if user_in_session(request):
         context = {
-        # VVV    note the '-' for descending           V
             'recent_reviews': Review.objects.order_by('-created_at')[:4],
             'all_books': Book.objects.all(),
-            'all_reviews': Review.objects.all(),
+            # 'all_reviews': Review.objects.values('review_book').distinct(),
         }
         return render(request, 'book_reviews/index.html', context)
     return redirect('login:index')
@@ -46,7 +45,15 @@ def add_book_and_review(request):
 
 def add_review(request, id):
     Review.objects.add_review(request, id)
+    print request
     return redirect('book:show_book', id)
+
+
+def delete_review(request, id):
+    # crap - need unique id's for book and review !!!
+    if user_in_session(request):
+        pass
+    return redirect('book:show_book')
 
 def display_errors(request, display_errors_list):
     for error in display_errors_list:
@@ -55,7 +62,7 @@ def display_errors(request, display_errors_list):
 
 def show_book(request, id):
     if user_in_session(request):
-        # print Book.objects.get(id=id).title
+        print Book.objects.get(id=id).title
         context = {
             'book': Book.objects.get(id=id),
             'reviews': Review.objects.filter(review_book=id)
@@ -69,7 +76,8 @@ def show_user(request, id):
         context = {
             'user': User.objects.get(id=id),
             # VV WHOA!!  https://docs.djangoproject.com/en/1.10/topics/db/queries/  VV  Lookups that span relationships - ALSO related_name (book_review)!!!
-            'books_reviewed': Book.objects.filter(review_book__review_creator__id=id)
+            'books_reviewed': Book.objects.filter(review_book__review_creator__id=id),
+            'review_count': Book.objects.filter(review_book__review_creator__id=id).count(),
         }
         return render(request, 'book_reviews/user.html', context)
     return redirect('login:index')
