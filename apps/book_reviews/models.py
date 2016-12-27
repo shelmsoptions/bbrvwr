@@ -7,7 +7,7 @@ class BookManager(models.Manager):
         errors = []
         # if both author fields empty:
         if request.POST['author_name'] == "" and request.POST['new_author_name'] == "":
-            errors.append('Must type Author name or select Author!')
+            errors.append('Must enter or select Author!')
             return (False, errors)
         # if
         elif request.POST['author_name'] == "":

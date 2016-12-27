@@ -38,6 +38,7 @@ def add_book_and_review(request):
         result = Book.objects.add_book(request)
         if result[0] == False:
             display_errors(request, result[1])
+            print display_errors
             return redirect('book:editor')
         # review created - add_review method 'assigns' it to
         Review.objects.add_review(request, result[1].id)

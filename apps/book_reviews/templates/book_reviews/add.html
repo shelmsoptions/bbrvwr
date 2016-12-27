@@ -25,6 +25,11 @@
                     {% endfor %}
                 </select>
             </p>
+            {% if messages %}
+                {% for message in messages %}
+                    <p> - {{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <p>
                 <label for="review">Review: </label>
                 <textarea name="review" rows="8" cols="80"></textarea>
@@ -40,11 +45,7 @@
                 </select>
             </p>
             <p><input type="submit" name="submit" value="Submit your review"></p>
-            {% if messages %}
-            {% for message in message %}
-            <p> - {{ message }}</p>
-            {% endfor %}
-            {% endif %}
+
         </form>
     </body>
 </html>
