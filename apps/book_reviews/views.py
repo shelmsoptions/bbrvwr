@@ -49,11 +49,13 @@ def add_review(request, id):
     return redirect('book:show_book', id)
 
 
-def delete_review(request, id):
-    # crap - need unique id's for book and review !!!
+def delete_review(request, review_id, book_id):
+    # crap - need unique id's for book_ and review_ if I wanna stay on current book review !!!
+    # print id
+    # print book_id
     if user_in_session(request):
-        pass
-    return redirect('book:show_book')
+        Review.objects.delete_review(request, review_id)
+    return redirect('book:show_book', book_id)
 
 def display_errors(request, display_errors_list):
     for error in display_errors_list:
@@ -62,7 +64,7 @@ def display_errors(request, display_errors_list):
 
 def show_book(request, id):
     if user_in_session(request):
-        print Book.objects.get(id=id).title
+        # print Book.objects.get(id=id).title
         context = {
             'book': Book.objects.get(id=id),
             'reviews': Review.objects.filter(review_book=id)

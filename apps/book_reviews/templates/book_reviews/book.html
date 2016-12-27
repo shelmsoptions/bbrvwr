@@ -21,6 +21,11 @@
                 <p>Reviewer Rating: {{ review.rating }}</p>
                 <p><a href="{% url 'book:show_user' review.review_creator.id %}">{{ review.review_creator.first_name }}</a> says: {{ review.review_content }}</p>
                 <p>Posted on {{ review.created_at }}</p>
+                <p>
+                    {% if review.review_creator.id == request.session.user.user_id %}
+                        * You can remove this review: <a href="{% url 'book:delete_review' review_id=review.id book_id=book.id %}">remove</a>
+                    {% endif %}
+                </p>
             </div>
         {% endfor %}
 
